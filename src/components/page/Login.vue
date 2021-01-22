@@ -76,7 +76,7 @@ export default {
     height: 100%;
     background-color: #38383813;
     background-image: url(../../assets/img/loginbg.jpg);
-    background-size: 100% 100%;
+    background-size: 100% ;
     /* background-position: center; */
     background-repeat: no-repeat;
 }
@@ -95,10 +95,11 @@ export default {
     width: 350px;
     margin: -190px 0 0 -175px;
     border-radius: 5px;
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(100, 123, 153, 0.4);
     /* background-image: url(../../assets/img/login.png); */
     background-size: 100% 100%;
     overflow: hidden;
+    padding: 30px;
 }
 .ms-content {
     padding: 30px 30px;

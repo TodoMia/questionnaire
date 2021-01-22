@@ -1,5 +1,8 @@
 .header{
-    background-color: #242f42;
+    background-image: url(../img/header.jpg);
+    background-size: 100% 100%;
+    background-color: white;
+    background-repeat: no-repeat;
 }
 .login-wrap{
     background: #324157;
