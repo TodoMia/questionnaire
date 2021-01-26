@@ -100,7 +100,7 @@ export default {
                 {
                     icon: 'el-icon-lx-calendar',
                     index: 'table',
-                    title: '文案模板'
+                    title: '新建问卷'
                 },
                 {
                     icon: 'el-icon-paperclip',

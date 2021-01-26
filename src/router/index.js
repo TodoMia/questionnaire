@@ -20,11 +20,6 @@ export default new Router({
                     meta: { title: '系统首页' }
                 },
                 {
-                    path: '/icon',
-                    component: () => import(/* webpackChunkName: "icon" */ '../components/page/Icon.vue'),
-                    meta: { title: '预提' }
-                },
-                {
                     path: '/table',
                     component: () => import(/* webpackChunkName: "table" */ '../components/page/BaseTable.vue'),
                     meta: { title: '文案模板' }
@@ -91,6 +86,11 @@ export default new Router({
             path: '/login',
             component: () => import(/* webpackChunkName: "login" */ '../components/page/Login.vue'),
             meta: { title: '登录' }
+        },
+        {
+            path: '/icon',
+            component: () => import(/* webpackChunkName: "login" */ '../components/page/Icon.vue'),
+            meta: { title: '问卷调查' }
         },
         {
             path: '*',
