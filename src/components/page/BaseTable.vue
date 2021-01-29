@@ -11,7 +11,7 @@
                 <h2 class="questionnaire_title">{{questionnaire.title}}</h2>
                 <div class="con">
                     <div class="subject" v-for="(item,index) in questionnaire.subjectlist">
-                        <h4 class="subjecttitle">{{item.serial}}、<span v-if="item.optiontype == 'radio'">（单选）</span><span v-if="item.optiontype == 'checkbox'">（多选）</span>{{item.subjecttitle}}{{item.optiocselect}}</h4>
+                        <h4 class="subjecttitle">{{item.serial}}、<span v-if="item.optiontype == 'radio'">（单选）</span><span v-if="item.optiontype == 'checkbox'">（多选）</span><input class="input" v-model="item.subjecttitle" type="text" >{{item.optiocselect}}</h4>
                         <!-- 单选题 -->
                         <el-radio-group v-model="item.optiocselect" v-if="item.optiontype == 'radio'">
                             <el-radio v-for="(op,index2) in item.option" :label="op.optionlabel">{{op.optionlabel}}、<input class="input" v-model="op.optionscon" type="text" ></el-radio>
