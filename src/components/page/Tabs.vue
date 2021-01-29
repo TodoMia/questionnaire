@@ -115,19 +115,16 @@
                         console.log(outdata)  // 最终解析出来的值
                         _this.datalist=outdata
 
-                        var obj = {  
-                        key1:1,  
-                        key2:2,  
-                        key3:3  
-                        };  
-                        
+                        // 判断对象有多少个属性
+                        var obj = { key1:1, key2:2, key3:3};  
                         console.log(Object.getOwnPropertyNames(_this.datalist[0]))
                         console.log(Object.getOwnPropertyNames(_this.datalist[0]).sort())
                         console.log(Object.getOwnPropertyNames(_this.datalist[0]).length  )
                         console.log(Object.keys(_this.datalist[0]).length)
                         console.log(Object.getOwnPropertyNames(obj).length  )
                         console.log(Object.keys(obj).length)
-                        }
+                        // 判断对象有多少个属性
+                    }
                     reader.readAsArrayBuffer(f);
                 }
                 if (rABS) {
