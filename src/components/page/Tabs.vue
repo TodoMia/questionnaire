@@ -29,24 +29,25 @@
             <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
             <div>{{datalist}}</div>
-            <el-table
-            :data="datalist"
-            style="width: 100%">
-            <el-table-column
-              prop="姓名"
-              label="姓名"
-              width="180">
-            </el-table-column>
-            <el-table-column
-              prop="邮件地址"
-              label="邮箱"
-              width="180">
-            </el-table-column>
-            <el-table-column
-              prop="移动电话"
-              label="电话">
-            </el-table-column>
-          </el-table>
+                <div class="preview_box">
+                    <h2 class="questionnaire_title">{{questionnaire.title}}</h2>
+                    <div class="con">
+                        <div class="subject" v-for="(item,index) in questionnaire.subjectlist">
+                            <h4 class="subjecttitle">{{item.serial}}、<span v-if="item.optiontype == 'radio'">（单选）</span><span v-if="item.optiontype == 'checkbox'">（多选）</span>{{item.subjecttitle}}{{item.optiocselect}}</h4>
+                            <!-- 单选题 -->
+                            <el-radio-group v-model="item.optiocselect" v-if="item.optiontype == 'radio'">
+                                <el-radio v-for="(op,index2) in item.option" :label="op.optionlabel">{{op.optionlabel}}、{{op.optionscon}}</el-radio>
+                            </el-radio-group>
+                            <!-- 单选题 -->
+                            <!-- 多选题 -->
+                            <el-checkbox-group v-model="item.optiocselect" v-if="item.optiontype == 'checkbox'">
+                                <el-checkbox v-for="(op,index2) in item.option" :label="op.optionlabel">{{op.optionlabel}}、{{op.optionscon}}</el-checkbox>
+                            </el-checkbox-group>
+                            <!-- 多选题 -->
+                            
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
 </template>
@@ -65,8 +66,9 @@
                 datalist:[],
                 fileList:[],
                 content: '',
-                editorOption: {
-                    placeholder: 'Hello World'
+                questionnaire:{
+                    title:'满意度调查',
+                    subjectlist : []
                 }
             }
         },
@@ -81,6 +83,7 @@
 
             },
             filechange(file, fileList){
+                this.questionnaire.title=file.name.substring(0, file.name.indexOf("."))
                 var _this=this
                 this.file = file.raw;
                 var rABS = false; //是否将文件读取为二进制字符串
@@ -112,18 +115,34 @@
                         // outdata就是你想要的东西 excel导入的数据
                         outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
                         // excel 数据再处理
-                        console.log(outdata)  // 最终解析出来的值
+                        // console.log(outdata)  // 最终解析出来的值
                         _this.datalist=outdata
-
+                        var qulist=[]
+                        for(var i=0;i<outdata.length;i++){
+                            var title={}
+                            if(outdata[i].optiontype == 'radio'){
+                                title.optiocselect=''
+                            }else{
+                                title.optiocselect=[]
+                            }
+                            title.serial=outdata[i].serial
+                            title.optiontype=outdata[i].optiontype
+                            title.subjecttitle=outdata[i].subjecttitle
+                            var opt=[]
+                            for(var j=0; j<(Object.keys(outdata[i]).length-3); j++){
+                                var dictionaries="ABCDEFGHIJKLMNOPQRST"
+                                var label=dictionaries.charAt(j)
+                                var op={
+                                    optionlabel:label,
+                                    optionscon: outdata[i]['option'+(j+1)]
+                                }
+                                opt.push(op)
+                            }
+                            title.option=opt
+                            qulist.push(title)
+                        }
                         // 判断对象有多少个属性
-                        var obj = { key1:1, key2:2, key3:3};  
-                        console.log(Object.getOwnPropertyNames(_this.datalist[0]))
-                        console.log(Object.getOwnPropertyNames(_this.datalist[0]).sort())
-                        console.log(Object.getOwnPropertyNames(_this.datalist[0]).length  )
-                        console.log(Object.keys(_this.datalist[0]).length)
-                        console.log(Object.getOwnPropertyNames(obj).length  )
-                        console.log(Object.keys(obj).length)
-                        // 判断对象有多少个属性
+                        _this.questionnaire.subjectlist=qulist
                     }
                     reader.readAsArrayBuffer(f);
                 }

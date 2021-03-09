@@ -62,7 +62,6 @@
 </template>
 
 <script>
-import { fetchData } from '../../api/index';
 export default {
     name: 'basetable',
     data() {
@@ -90,7 +89,6 @@ export default {
         };
     },
     created() {
-        this.getData();
     },
     methods: {
         // 获取 easy-mock 的模拟数据
@@ -108,7 +106,6 @@ export default {
         // 分页导航
         handlePageChange(val) {
             this.$set(this.query, 'pageIndex', val);
-            this.getData();
         },
         handleSelectionChange(val) {
             this.multipleSelection = val;
