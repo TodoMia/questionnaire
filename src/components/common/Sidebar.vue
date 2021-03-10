@@ -105,23 +105,22 @@ export default {
                 {
                     icon: 'el-icon-paperclip',
                     index: 'tabs',
-                    title: '产品链接'
+                    title: '上传文件'
                 },
                 {
                     icon: 'el-icon-data-analysis',
                     index: 'donate',
-                    title: '模型'
-                },
-                
-                {
-                    icon: 'el-icon-finished',
-                    index: 'icon',
-                    title: '预提'
+                    title: '数据处理'
                 },
                 {
                     icon: 'el-icon-refresh-left',
                     index: 'form',
-                    title: '失败重提',
+                    title: '统计图表',
+                },
+                {
+                    icon: 'el-icon-finished',
+                    index: 'icon',
+                    title: '预览'
                 },
                 {
                     icon: 'el-icon-lx-calendar',
