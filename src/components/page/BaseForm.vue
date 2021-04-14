@@ -8,7 +8,7 @@
             </el-breadcrumb>
         </div>
         <div class="container">
-            <div >
+            <div>
                 <h2>{{report.title}}</h2>
                 <div v-for="(item,index) in report.subjectlist" class="queitem">
                     <h4>{{item.serial}}、{{item.subjecttitle}}</h4>
@@ -68,7 +68,7 @@ export default {
                             }
                         ]
                     },
-                     {//第一题
+                    {//第一题
                         serial: '2',
                         subjecttitle: '你满意吗',
                         optiontype: 'radio',
@@ -78,12 +78,12 @@ export default {
                             {
                                 optionlabel:'A',
                                 optionscon:'满意',
-                                selectnumb: 4418
+                                selectnumb: 4018
                             },
                             {
                                 optionlabel:'B',
                                 optionscon:'一般',
-                                selectnumb: 1186
+                                selectnumb: 1086
                             },
                             {
                                 optionlabel:'c',
