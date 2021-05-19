@@ -7,6 +7,18 @@
             </el-breadcrumb>
         </div>
         <div class="container">
+            <div>
+                <el-upload
+                    class="upload-demo"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :on-preview="handlePreview"                
+                    :limit="3"
+                    :file-list="fileList"
+                    :on-change="filechange"
+                >
+                <el-button size="small" type="primary">点击上传</el-button>
+                </el-upload>
+            </div>
             <div class="list">
                 <h2 class="questionnaire_title">{{questionnaire.title}}</h2>
                 <div class="con">
@@ -225,11 +237,98 @@
             },
             deletesub(){
                 this.questionnaire.subjectlist.pop()
-            }
+            },
+            filechange(file, fileList){
+                this.questionnaire.title=file.name.substring(0, file.name.indexOf("."))
+                var _this=this
+                this.file = file.raw;
+                var rABS = false; //是否将文件读取为二进制字符串
+                var f = this.file;
+                var reader = new FileReader();
+                FileReader.prototype.readAsBinaryString = function (f) {
+                    var binary = "";
+                    var rABS = false; //是否将文件读取为二进制字符串
+                    var pt = this;
+                    var wb; //读取完成的数据
+                    var outdata;
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var bytes = new Uint8Array(reader.result);
+                        var length = bytes.byteLength;
+                        for (var i = 0; i < length; i++) {
+                            binary += String.fromCharCode(bytes[i]);
+                        }
+                        var XLSX = require('xlsx');
+                        if (rABS) {
+                            wb = XLSX.read(btoa(fixdata(binary)), { //手动转化
+                                type: 'base64'
+                            });
+                        } else {
+                            wb = XLSX.read(binary, {
+                                type: 'binary'
+                            });
+                        }
+                        // outdata就是你想要的东西 excel导入的数据
+                        outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+                        // excel 数据再处理
+                        // console.log(outdata)  // 最终解析出来的值
+                        _this.datalist=outdata
+                        var qulist=[]
+                        for(var i=0;i<outdata.length;i++){
+                            var title={}
+                            if(outdata[i].optiontype == 'radio'){
+                                title.optiocselect=''
+                            }else{
+                                title.optiocselect=[]
+                            }
+                            title.serial=outdata[i].serial
+                            title.optiontype=outdata[i].optiontype
+                            title.subjecttitle=outdata[i].subjecttitle
+                            var opt=[]
+                            for(var j=0; j<(Object.keys(outdata[i]).length-3); j++){
+                                var dictionaries="ABCDEFGHIJKLMNOPQRST"
+                                var label=dictionaries.charAt(j)
+                                var op={
+                                    optionlabel:label,
+                                    optionscon: outdata[i]['option'+(j+1)]
+                                }
+                                opt.push(op)
+                            }
+                            title.option=opt
+                            qulist.push(title)
+                        }
+                        // 判断对象有多少个属性
+                        _this.questionnaire.subjectlist=qulist
+                    }
+                    reader.readAsArrayBuffer(f);
+                }
+                if (rABS) {
+                    reader.readAsArrayBuffer(f);
+                } else {
+                    reader.readAsBinaryString(f);
+                }
+
+            },
         }
     }
 </script>
 <style scoped>
+     .editor-btn{
+        margin-top: 20px;
+    }
+    .container >>> .el-upload--text {
+        background-color: #fff;
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        width: auto;
+        height: auto;
+        text-align: center;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
     .editor-btn{
         margin-top: 20px;
     }

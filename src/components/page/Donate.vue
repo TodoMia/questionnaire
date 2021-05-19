@@ -8,24 +8,22 @@
             </el-breadcrumb>
         </div>
         <div class="container">
-            <div class="preview_box">
-                <h2 class="questionnaire_title">{{questionnaire.title}}</h2>
-                <div class="con">
-                    <div class="subject" v-for="(item,index) in questionnaire.subjectlist">
-                        <h4 class="subjecttitle">{{item.serial}}、<span v-if="item.optiontype == 'radio'">（单选）</span><span v-if="item.optiontype == 'checkbox'">（多选）</span>{{item.subjecttitle}}{{item.optiocselect}}</h4>
-                        <!-- 多选题 -->
-                        <el-checkbox-group v-model="item.optiocselect" v-if="item.optiontype == 'checkbox'">
-                            <el-checkbox v-for="(op,index2) in item.option" :label="op.optionlabel">{{op.optionlabel}}、{{op.optionscon}}</el-checkbox>
-                        </el-checkbox-group>
-                        <!-- 多选题 -->
-                        <!-- 单选题 -->
-                        <el-radio-group v-model="item.optiocselect" v-if="item.optiontype == 'radio'">
-                            <el-radio v-for="(op,index2) in item.option" :label="op.optionlabel">{{op.optionlabel}}、{{op.optionscon}}</el-radio>
-                        </el-radio-group>
-                        <!-- 单选题 -->
-                    </div>
-                </div>
-            </div>
+            <el-table
+                :data="tableData"
+                stripe
+                border
+                style="width: 100%">
+                <el-table-column prop="title" label="问卷标题"width="180"></el-table-column>
+                <el-table-column prop="name" label="创建人" width="120"></el-table-column>
+                <el-table-column prop="date" label="创建时间" width="120"></el-table-column>
+                <el-table-column prop="address" label="链接"></el-table-column>
+                <el-table-column label="操作" width="240" align="center" fixed="right">
+                    <template slot-scope="scope">
+                        <el-button type="text" size="small">分享链接</el-button>
+                        <el-button @click="handleClick(scope.row)" type="text" size="small">查看统计报告</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
         </div>
     </div>
 </template>
@@ -35,56 +33,33 @@ export default {
     name: 'basetable',
     data() {
         return {
-            questionnaire:{
-                title:'满意度调查',
-                subjectlist : []
-            },
-            tablelist:[
-                { 
-                    "serial": 1, "optiontype": "radio", "subjecttitle": "题目", 
-                    "option1": "选项1", "option2": "选项2"
-                }, 
-                { 
-                    "serial": 2, "optiontype": "checkbox", "subjecttitle": "题目2", 
-                    "option1": "选项11", "option2": "选项22", "option3": "选项33" 
-                } ,
-                { 
-                    "serial": 2, "optiontype": "radio", "subjecttitle": "题目2", 
-                    "option1": "选项11", "option2": "选项22", "option3": "选项33" 
-                },
-                
+            tableData: [
+                {
+                date: '2016-05-02',
+                name: '王小虎',
+                title: '满意度调查',
+                address: 'https://opensupport.alipay.com/support/knowledge/46919/201602503605#'
+                }, {
+                date: '2016-05-04',
+                name: '王小虎',
+                title: '调查报告',
+                address: 'https://opensupport.alipay.com/support/knowledge/46919/201602503605#'
+                }, {
+                date: '2016-05-01',
+                name: '王小虎',
+                title: '投票评选',
+                address: 'https://opensupport.alipay.com/support/knowledge/46919/201602503605#'
+                }, {
+                date: '2016-05-03',
+                name: '王小虎',
+                title: '学术调研',
+                address: 'https://opensupport.alipay.com/support/knowledge/46919/201602503605#'
+                }
             ]
         };
     },
     created() {
-        for(var i=0;i<this.tablelist.length;i++){
-            var title={}
-            if(this.tablelist[i].optiontype == 'radio'){
-                title.optiocselect=''
-            }else{
-                title.optiocselect=[]
-            }
-            
-            title.serial=this.tablelist[i].serial
-            title.optiontype=this.tablelist[i].optiontype
-            title.subjecttitle=this.tablelist[i].subjecttitle
-            var opt=[]
-            for(var j=0; j<(Object.keys(this.tablelist[i]).length-3); j++){
-                // var op={}
-                var dictionaries="ABCDEFGHIJKLMNOPQRST"
-                var label=dictionaries.charAt(j)
-                // op.optionlabel=  label
-                // op.optionscon = this.tablelist[i]['option'+(j+1)]
-                var op={
-                    optionlabel:label,
-                    optionscon: this.tablelist[i]['option'+(j+1)]
-                }
-                opt.push(op)
-            }
-            // console.log(opt);
-            title.option=opt
-            this.questionnaire.subjectlist.push(title)
-        }
+        
     },
     methods: {
 

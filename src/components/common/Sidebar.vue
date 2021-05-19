@@ -103,15 +103,16 @@ export default {
                     title: '新建问卷'
                 },
                 {
+                    icon: 'el-icon-data-analysis',
+                    index: 'donate',
+                    title: '问卷列表'
+                },
+                {
                     icon: 'el-icon-paperclip',
                     index: 'tabs',
                     title: '上传文件'
                 },
-                {
-                    icon: 'el-icon-data-analysis',
-                    index: 'donate',
-                    title: '数据处理'
-                },
+                
                 {
                     icon: 'el-icon-refresh-left',
                     index: 'form',

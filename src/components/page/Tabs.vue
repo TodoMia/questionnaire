@@ -7,17 +7,6 @@
             </el-breadcrumb>
         </div>
         <div class="container">
-            
-            <!-- <el-upload
-                class="upload-demo"
-                drag
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :on-change="filechange"
-                :auto-upload="false"
-                >
-                <i class="el-icon-upload"></i>
-                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            </el-upload> -->
             <el-upload
                 class="upload-demo"
                 action="https://jsonplaceholder.typicode.com/posts/"
@@ -171,16 +160,16 @@
         margin-top: 20px;
     }
     .container >>> .el-upload--text {
-    background-color: #fff;
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: auto;
-    height: auto;
-    text-align: center;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-}
+        background-color: #fff;
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        width: auto;
+        height: auto;
+        text-align: center;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
 </style>
